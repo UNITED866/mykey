@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
     <style>
-        body { background-color: #f1f5f9; font-family: 'Inter', sans-serif; -webkit-tap-highlight-color: transparent; }
+        body { background-color: #f1f5f9; font-family: 'Inter', sans-serif; -webkit-tap-highlight-color: transparent; overflow-x: hidden; }
         .tab-content { display: none; }
         .tab-active { display: block; animation: fadeIn 0.3s ease; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
@@ -17,6 +17,7 @@
         #main-app { display: none; }
         .btn-active:active { transform: scale(0.95); }
         #reset-timer { font-weight: 900 !important; font-style: italic; letter-spacing: -1px; }
+        input::placeholder { font-weight: 900; opacity: 0.3; text-transform: uppercase; font-size: 10px; }
     </style>
 </head>
 <body class="antialiased">
@@ -24,19 +25,23 @@
     <div id="auth-screen" class="min-h-screen flex items-center justify-center p-6 bg-white">
         <div class="w-full max-w-md space-y-10">
             <div class="text-center space-y-2">
-                <h1 class="text-4xl font-black tracking-tighter text-blue-700 italic uppercase">CloudVip</h1>
+                <h1 class="text-5xl font-black tracking-tighter text-blue-700 italic uppercase">CloudVip</h1>
                 <p class="text-[10px] font-black text-gray-400 uppercase tracking-[0.2em]">Hệ thống kiếm tiền Premium</p>
             </div>
 
             <div class="bg-gray-50 p-2 rounded-[30px] flex shadow-inner">
-                <button id="btn-login" onclick="switchAuth('login')" class="w-1/2 py-3.5 rounded-xl font-black text-[11px] uppercase bg-white shadow-md text-blue-700">Đăng Nhập</button>
-                <button id="btn-reg" onclick="switchAuth('reg')" class="w-1/2 py-3.5 rounded-xl font-black text-[11px] uppercase text-gray-400">Đăng Ký</button>
+                <button id="btn-login" onclick="switchAuth('login')" class="w-1/2 py-4 rounded-xl font-black text-[11px] uppercase bg-white shadow-md text-blue-700 transition-all">Đăng Nhập</button>
+                <button id="btn-reg" onclick="switchAuth('reg')" class="w-1/2 py-4 rounded-xl font-black text-[11px] uppercase text-gray-400 transition-all">Đăng Ký</button>
             </div>
 
             <div class="space-y-4">
-                <input id="au-user" type="text" placeholder="TÊN ĐĂNG NHẬP" class="w-full bg-gray-50 border-none px-6 py-4.5 rounded-2xl text-[12px] font-black focus:ring-2 focus:ring-blue-600 outline-none h-16">
-                <input id="au-pass" type="password" placeholder="MẬT MÃ" class="w-full bg-gray-50 border-none px-6 py-4.5 rounded-2xl text-[12px] font-black focus:ring-2 focus:ring-blue-600 outline-none h-16">
-                <button onclick="handleAuth()" class="w-full bg-blue-700 text-white py-5 rounded-[25px] font-black text-[12px] uppercase shadow-2xl shadow-blue-200 btn-active tracking-widest">Xác nhận hệ thống</button>
+                <div class="relative">
+                    <input id="au-user" type="text" placeholder="Tên đăng nhập" class="w-full bg-gray-50 border-none px-6 py-5 rounded-2xl text-[12px] font-black focus:ring-2 focus:ring-blue-600 outline-none h-16 uppercase">
+                </div>
+                <div class="relative">
+                    <input id="au-pass" type="password" placeholder="Mật mã bảo mật" class="w-full bg-gray-50 border-none px-6 py-5 rounded-2xl text-[12px] font-black focus:ring-2 focus:ring-blue-600 outline-none h-16">
+                </div>
+                <button onclick="handleAuth()" class="w-full bg-blue-700 text-white py-5 rounded-[25px] font-black text-[13px] uppercase shadow-2xl shadow-blue-200 btn-active tracking-widest">Truy cập hệ thống</button>
             </div>
         </div>
     </div>
@@ -45,29 +50,29 @@
         <header class="bg-white px-6 pt-10 pb-10 rounded-b-[50px] shadow-sm relative overflow-hidden">
             <div class="relative z-10 flex justify-between items-center">
                 <div>
-                    <h2 class="text-[10px] font-black text-gray-400 uppercase tracking-widest">Xin chào,</h2>
-                    <p id="txt-user" class="text-xl font-black text-gray-900 italic uppercase">USER</p>
+                    <h2 class="text-[10px] font-black text-gray-400 uppercase tracking-widest">Xin chào thành viên,</h2>
+                    <p id="txt-user" class="text-2xl font-black text-gray-900 italic uppercase">USER</p>
                 </div>
-                <div class="bg-blue-50 px-4 py-2 rounded-2xl">
-                    <span id="txt-balance" class="text-blue-700 font-black text-sm italic">0</span>
-                    <span class="text-[10px] font-black text-blue-300 ml-1">XU</span>
+                <div class="bg-blue-50 px-5 py-2.5 rounded-2xl flex items-center">
+                    <span id="txt-balance" class="text-blue-700 font-black text-base italic">0</span>
+                    <span class="text-[10px] font-black text-blue-300 ml-1.5 uppercase">Xu</span>
                 </div>
             </div>
 
-            <div class="mt-10 bg-blue-700 rounded-[40px] p-8 text-white relative overflow-hidden shadow-2xl shadow-blue-200">
-                <p class="text-[10px] font-black opacity-60 uppercase tracking-widest">Số dư khả dụng</p>
+            <div class="mt-10 bg-blue-700 rounded-[40px] p-8 text-white relative overflow-hidden shadow-2xl shadow-blue-300">
+                <p class="text-[10px] font-black opacity-60 uppercase tracking-widest">Ví tiền hiện tại</p>
                 <div class="flex items-end space-x-2 mt-1">
                     <h3 id="txt-main-balance" class="text-4xl font-black italic">0</h3>
                     <span class="text-xs font-black opacity-60 mb-1.5 uppercase tracking-tighter">XU</span>
                 </div>
-                <div class="grid grid-cols-2 gap-4 mt-8 pt-8 border-t border-blue-600/50">
-                    <div>
-                        <p class="text-[9px] font-black opacity-50 uppercase tracking-tighter text-blue-100">Nhiệm vụ xong</p>
-                        <p id="txt-today-tasks" class="font-black text-sm mt-1">0</p>
+                <div class="grid grid-cols-2 gap-4 mt-10 pt-8 border-t border-blue-600/50">
+                    <div class="text-center">
+                        <p class="text-[9px] font-black opacity-50 uppercase text-blue-100">Nhiệm vụ xong</p>
+                        <p id="txt-today-tasks" class="font-black text-base mt-1 italic">0</p>
                     </div>
-                    <div>
-                        <p class="text-[9px] font-black opacity-50 uppercase tracking-tighter text-blue-100">Tổng thu nhập</p>
-                        <p id="txt-total-earned" class="font-black text-sm mt-1">0</p>
+                    <div class="text-center border-l border-blue-600/50">
+                        <p class="text-[9px] font-black opacity-50 uppercase text-blue-100">Tổng thu nhập</p>
+                        <p id="txt-total-earned" class="font-black text-base mt-1 italic">0</p>
                     </div>
                 </div>
             </div>
@@ -76,204 +81,169 @@
         <main class="px-6 mt-8">
             <div id="tab-home" class="tab-content tab-active space-y-6">
                 <div class="flex justify-between items-center">
-                    <h3 class="font-black text-sm uppercase tracking-tighter text-gray-900 italic">Nhiệm vụ hôm nay</h3>
-                    <div class="bg-white px-3 py-1.5 rounded-full shadow-sm border border-gray-100">
-                        <span id="reset-timer" class="text-[10px] text-blue-600">--:--:--</span>
+                    <h3 class="font-black text-sm uppercase tracking-tighter text-gray-900 italic">Danh sách nhiệm vụ</h3>
+                    <div class="bg-white px-4 py-2 rounded-full shadow-sm border border-gray-100 flex items-center space-x-2">
+                        <i class="fas fa-clock text-[10px] text-blue-600"></i>
+                        <span id="reset-timer" class="text-[11px] text-blue-700 font-black">00:00:00</span>
                     </div>
                 </div>
                 <div id="task-list" class="space-y-4"></div>
             </div>
 
             <div id="tab-withdraw" class="tab-content space-y-6">
-                <h3 class="font-black text-sm uppercase tracking-tighter text-gray-900 italic">Rút tiền về ngân hàng</h3>
-                <div class="bg-white p-6 rounded-[40px] shadow-sm border border-gray-100 space-y-4">
-                    <div class="space-y-2">
-                        <label class="text-[9px] font-black text-gray-400 uppercase ml-2 tracking-widest">Ngân hàng / Ví</label>
-                        <input id="wd-bank" type="text" placeholder="VÍ DỤ: MBBANK, MOMO..." class="w-full bg-gray-50 border-none px-6 py-4 rounded-2xl text-[11px] font-black outline-none focus:ring-1 focus:ring-blue-600">
+                <div class="flex items-center space-x-3">
+                    <div class="w-12 h-12 bg-blue-100 text-blue-700 rounded-2xl flex items-center justify-center shadow-sm">
+                        <i class="fas fa-building-columns text-xl"></i>
                     </div>
-                    <div class="space-y-2">
-                        <label class="text-[9px] font-black text-gray-400 uppercase ml-2 tracking-widest">Số tài khoản</label>
-                        <input id="wd-stk" type="text" placeholder="NHẬP SỐ TÀI KHOẢN" class="w-full bg-gray-50 border-none px-6 py-4 rounded-2xl text-[11px] font-black outline-none focus:ring-1 focus:ring-blue-600">
+                    <div>
+                        <h3 class="font-black text-sm uppercase tracking-tighter text-gray-900 italic leading-none">Rút tiền mặt</h3>
+                        <p class="text-[9px] font-black text-gray-400 uppercase mt-1">Yêu cầu thanh toán ngân hàng</p>
                     </div>
-                    <div class="space-y-2">
-                        <label class="text-[9px] font-black text-gray-400 uppercase ml-2 tracking-widest">Tên chủ thẻ</label>
-                        <input id="wd-name" type="text" placeholder="VIET HOA KHONG DAU" class="w-full bg-gray-50 border-none px-6 py-4 rounded-2xl text-[11px] font-black outline-none focus:ring-1 focus:ring-blue-600">
-                    </div>
-                    <div class="space-y-2">
-                        <label class="text-[9px] font-black text-gray-400 uppercase ml-2 tracking-widest">Số xu muốn rút</label>
-                        <input id="wd-amount" type="number" placeholder="TỐI THIỂU 100.000 XU" class="w-full bg-gray-50 border-none px-6 py-4 rounded-2xl text-[11px] font-black outline-none focus:ring-1 focus:ring-blue-600">
-                    </div>
-                    <button onclick="handleWd()" class="w-full bg-blue-700 text-white py-5 rounded-3xl font-black text-[11px] uppercase shadow-xl shadow-blue-100 btn-active">Xác nhận rút tiền</button>
-                    <p class="text-center text-[8px] text-gray-400 font-black uppercase italic italic">Yêu cầu được duyệt từ 1-24h</p>
+                </div>
+                
+                <div class="bg-white p-8 rounded-[45px] shadow-sm border border-gray-100 space-y-5">
+                    <input id="wd-bank" type="text" placeholder="Ngân hàng (Ví dụ: MBBank, Momo)" class="w-full bg-gray-50 border-none px-6 py-4.5 rounded-2xl text-[12px] font-black outline-none focus:ring-1 focus:ring-blue-600 uppercase">
+                    <input id="wd-stk" type="text" placeholder="Số tài khoản nhận tiền" class="w-full bg-gray-50 border-none px-6 py-4.5 rounded-2xl text-[12px] font-black outline-none focus:ring-1 focus:ring-blue-600">
+                    <input id="wd-name" type="text" placeholder="Họ và tên chủ tài khoản" class="w-full bg-gray-50 border-none px-6 py-4.5 rounded-2xl text-[12px] font-black outline-none focus:ring-1 focus:ring-blue-600 uppercase">
+                    <input id="wd-amount" type="number" placeholder="Số xu (Tối thiểu 100,000)" class="w-full bg-gray-50 border-none px-6 py-4.5 rounded-2xl text-[12px] font-black outline-none focus:ring-1 focus:ring-blue-600">
+                    <button onclick="handleWd()" class="w-full bg-blue-700 text-white py-5 rounded-[25px] font-black text-[12px] uppercase shadow-xl shadow-blue-100 btn-active">Xác nhận gửi yêu cầu</button>
+                    <p class="text-center text-[8px] text-gray-400 font-black uppercase italic tracking-widest">Tiền sẽ về trong vòng 1-24h làm việc</p>
                 </div>
             </div>
 
             <div id="tab-profile" class="tab-content">
-                <div class="bg-white p-6 rounded-[40px] shadow-sm border border-gray-100 space-y-6">
-                    <div class="flex items-center space-x-4">
-                        <div class="w-14 h-14 bg-blue-100 rounded-2xl flex items-center justify-center text-blue-700 text-xl"><i class="fas fa-user-shield"></i></div>
+                <div class="bg-white p-8 rounded-[45px] shadow-sm border border-gray-100 space-y-8">
+                    <div class="flex items-center space-x-5">
+                        <div class="w-16 h-16 bg-blue-100 rounded-[22px] flex items-center justify-center text-blue-700 text-2xl shadow-inner"><i class="fas fa-user-shield"></i></div>
                         <div>
-                            <p id="user-ip" class="text-[9px] font-black text-gray-400 uppercase">IP: ---</p>
-                            <p class="text-xs font-black text-gray-900 uppercase italic">TÀI KHOẢN PREMIUM</p>
+                            <p id="user-ip" class="text-[9px] font-black text-gray-400 uppercase tracking-tighter">Đang xác định IP...</p>
+                            <p class="text-sm font-black text-gray-900 uppercase italic">Tài khoản Premium</p>
                         </div>
                     </div>
-                    <button onclick="logout()" class="w-full py-4 rounded-2xl text-[10px] font-black uppercase text-red-500 bg-red-50">Đăng xuất</button>
+                    <div class="space-y-3">
+                        <button onclick="logout()" class="w-full py-5 rounded-[20px] text-[11px] font-black uppercase text-red-500 bg-red-50 btn-active transition-all">Đăng xuất tài khoản</button>
+                    </div>
                 </div>
             </div>
         </main>
 
-        <nav class="fixed bottom-6 left-6 right-6 bg-white/90 backdrop-blur-xl h-20 rounded-[30px] shadow-2xl flex items-center justify-around px-4 border border-white/10 z-40">
-            <button onclick="switchTab('home', this)" class="nav-item active flex flex-col items-center space-y-1">
-                <i class="fas fa-layer-group text-lg"></i>
-                <span class="text-[9px] font-black uppercase">Nhiệm vụ</span>
+        <nav class="fixed bottom-6 left-6 right-6 bg-white/95 backdrop-blur-xl h-22 rounded-[35px] shadow-2xl flex items-center justify-around px-4 border border-white/20 z-40">
+            <button onclick="switchTab('home', this)" class="nav-item active flex flex-col items-center space-y-1.5 text-blue-700 transition-all">
+                <i class="fas fa-layer-group text-xl"></i>
+                <span class="text-[9px] font-black uppercase tracking-tighter">Nhiệm vụ</span>
             </button>
-            <button onclick="switchTab('withdraw', this)" class="nav-item flex flex-col items-center space-y-1 text-gray-400">
-                <i class="fas fa-building-columns"></i>
-                <span class="text-[9px] font-black uppercase">Rút tiền</span>
+            <button onclick="switchTab('withdraw', this)" class="nav-item flex flex-col items-center space-y-1.5 text-gray-400 transition-all">
+                <i class="fas fa-building-columns text-xl"></i>
+                <span class="text-[9px] font-black uppercase tracking-tighter">Rút tiền</span>
             </button>
-            <button onclick="switchTab('profile', this)" class="nav-item flex flex-col items-center space-y-1 text-gray-400">
-                <i class="fas fa-fingerprint text-lg"></i>
-                <span class="text-[9px] font-black uppercase">Cá nhân</span>
+            <button onclick="switchTab('profile', this)" class="nav-item flex flex-col items-center space-y-1.5 text-gray-400 transition-all">
+                <i class="fas fa-fingerprint text-xl"></i>
+                <span class="text-[9px] font-black uppercase tracking-tighter">Cá nhân</span>
             </button>
         </nav>
     </div>
 
     <div id="verify-modal" class="fixed inset-0 bg-black/80 backdrop-blur-md z-[100] hidden items-center justify-center p-8">
-        <div class="bg-white w-full max-w-sm rounded-[45px] p-10 text-center">
-            <div id="verify-loading" class="space-y-4">
-                <div class="w-16 h-16 border-4 border-blue-100 border-t-blue-700 rounded-full animate-spin mx-auto"></div>
-                <p class="text-[10px] font-black text-gray-900 uppercase italic">Đang kiểm tra hệ thống...</p>
+        <div class="bg-white w-full max-w-sm rounded-[50px] p-10 text-center shadow-2xl">
+            <div id="verify-loading" class="space-y-6">
+                <div class="w-20 h-20 border-4 border-blue-100 border-t-blue-700 rounded-full animate-spin mx-auto"></div>
+                <p class="text-[11px] font-black text-gray-900 uppercase italic tracking-tighter">Đang kiểm tra kết quả...</p>
             </div>
-            <div id="verify-success" class="hidden space-y-6">
-                <div class="w-20 h-20 bg-green-50 text-green-500 rounded-full flex items-center justify-center text-2xl mx-auto"><i class="fas fa-check"></i></div>
-                <h3 class="text-xl font-black text-gray-900 uppercase italic tracking-tighter">THÀNH CÔNG!</h3>
-                <button onclick="claimReward()" class="w-full bg-gray-900 text-white py-5 rounded-[25px] font-black text-[11px] uppercase btn-active">Nhận thưởng ngay</button>
+            <div id="verify-success" class="hidden space-y-8">
+                <div class="w-24 h-24 bg-green-50 text-green-500 rounded-full flex items-center justify-center text-3xl mx-auto shadow-inner"><i class="fas fa-check-double"></i></div>
+                <div>
+                    <h3 class="text-2xl font-black text-gray-900 uppercase italic tracking-tighter">HOÀN THÀNH!</h3>
+                    <p class="text-[10px] font-black text-gray-400 uppercase mt-2">Dữ liệu đã được xác minh thành công</p>
+                </div>
+                <button onclick="claimRewardFinal()" class="w-full bg-blue-700 text-white py-5 rounded-[25px] font-black text-[12px] uppercase btn-active shadow-lg shadow-blue-200">Nhận xu vào ví</button>
             </div>
         </div>
     </div>
 
     <script>
         const TASKS = [
-            { id: 'upto3', name: 'Upto 3 Steps', reward: 375, limit: 1000, url: 'https://uptolink.one/st?api=dc765daabf403cde36274f0aa4ee203405c0a6bc&url=https://united866.github.io/KiemTienTieu/?task=upto3&status=success' },
-            { id: 'upto2', name: 'Upto 2 Steps', reward: 350, limit: 1000, url: 'https://uptolink.one/st?api=dc765daabf403cde36274f0aa4ee203405c0a6bc&url=https://united866.github.io/KiemTienTieu/?task=upto2&status=success' },
-            { id: 'nhapma', name: 'Nhapma.net', reward: 250, limit: 3, url: 'https://service.nhapma.com/st?token=f8ab8870-f2ac-42ca-9f73-fc8a0f89369d&url=https://united866.github.io/KiemTienTieu/?task=nhapma&status=success' },
-            { id: 'taplayma', name: 'TapLayMa.net', reward: 250, limit: 3, url: 'https://api.taplayma.com/st?token=9056f859-315a-4f12-a017-9dd5d6e73ac9&url=https://united866.github.io/KiemTienTieu/?task=taplayma&status=success' },
-            { id: 'layma', name: 'LayMa.net', reward: 275, limit: 2, url: 'https://api.layma.net/api/admin/shortlink/quicklink?tokenUser=35aaa8008b3b29e51993f0c9df180143&url=https://united866.github.io/KiemTienTieu/?task=layma&status=success' },
-            { id: 'link4m', name: 'Link4m.co', reward: 400, limit: 2, url: 'https://link4m.co/st?api=690b7843600dcc0b58617bc8&url=https://united866.github.io/KiemTienTieu/?task=link4m&status=success' },
-            { id: 'traffictot', name: 'TrafficTot.vn', reward: 700, limit: 6, url: 'https://services.traffictot.com/api/v1?api_key=3c712aa2a6db641d8fe870b01fc231d8d6cb6637c031e8a5b12503cde460ff2b&url=https://united866.github.io/KiemTienTieu/?task=traffictot&status=success' }
+            { id: 'upto3', name: 'Upto 3 Steps', reward: 375, limit: 1000, url: 'https://uptolink.one/st?api=dc765daabf403cde36274f0aa4ee203405c0a6bc' },
+            { id: 'upto2', name: 'Upto 2 Steps', reward: 350, limit: 1000, url: 'https://uptolink.one/st?api=dc765daabf403cde36274f0aa4ee203405c0a6bc' },
+            { id: 'nhapma', name: 'Nhapma.net', reward: 250, limit: 3, url: 'https://service.nhapma.com/st?token=f8ab8870-f2ac-42ca-9f73-fc8a0f89369d' },
+            { id: 'taplayma', name: 'TapLayMa.net', reward: 250, limit: 3, url: 'https://api.taplayma.com/st?token=9056f859-315a-4f12-a017-9dd5d6e73ac9' },
+            { id: 'layma', name: 'LayMa.net', reward: 275, limit: 2, url: 'https://api.layma.net/api/admin/shortlink/quicklink?tokenUser=35aaa8008b3b29e51993f0c9df180143' },
+            { id: 'link4m', name: 'Link4m.co', reward: 400, limit: 2, url: 'https://link4m.co/st?api=690b7843600dcc0b58617bc8' },
+            { id: 'traffictot', name: 'TrafficTot.vn', reward: 700, limit: 6, url: 'https://services.traffictot.com/api/v1?api_key=3c712aa2a6db641d8fe870b01fc231d8d6cb6637c031e8a5b12503cde460ff2b' }
         ];
 
-        let currentUser = null;
+        let currentUser = localStorage.getItem('user');
         let data = {};
-        let userIP = '...';
+        window.authMode = 'login';
 
         window.onload = () => {
             fetch('https://api.ipify.org?format=json').then(r => r.json()).then(j => {
-                userIP = j.ip;
-                document.getElementById('user-ip').innerText = "IP: " + userIP;
+                document.getElementById('user-ip').innerText = "IP: " + j.ip;
             });
-            checkLogin();
-            startResetTimer();
-        };
-
-        function startResetTimer() {
-            const timerElement = document.getElementById('reset-timer');
-            const update = () => {
-                const now = new Date();
-                const tomorrow = new Date(now.getFullYear(), now.getMonth(), now.getDate() + 1, 0, 0, 0);
-                const diff = tomorrow - now;
-                const h = Math.floor(diff / (1000 * 60 * 60));
-                const m = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-                const s = Math.floor((diff % (1000 * 60)) / 1000);
-                timerElement.innerText = `${h.toString().padStart(2, '0')}:${m.toString().padStart(2, '0')}:${s.toString().padStart(2, '0')}`;
-                if (h === 0 && m === 0 && s === 0) location.reload();
-            };
-            update(); setInterval(update, 1000);
-        }
-
-        function checkLogin() {
-            currentUser = localStorage.getItem('user');
             if(currentUser) {
                 document.getElementById('auth-screen').style.display = 'none';
                 document.getElementById('main-app').style.display = 'block';
                 loadData();
-                handleRedirectCallback();
+                checkRewardLogic();
+            }
+            startTimer();
+        };
+
+        function checkRewardLogic() {
+            const currentURL = window.location.href;
+            if (currentURL.includes('status=success') && currentURL.includes('task=')) {
+                const urlParams = new URLSearchParams(window.location.search);
+                const taskId = urlParams.get('task');
+                if (taskId) {
+                    window.pendingTask = taskId;
+                    document.getElementById('verify-modal').style.display = 'flex';
+                    setTimeout(() => {
+                        document.getElementById('verify-loading').classList.add('hidden');
+                        document.getElementById('verify-success').classList.remove('hidden');
+                    }, 2500);
+                }
             }
         }
 
-        function handleAuth() {
-            const u = document.getElementById('au-user').value.trim();
-            const p = document.getElementById('au-pass').value.trim();
-            if(!u || !p) return alert("Vui lòng nhập đủ thông tin!");
+        function claimRewardFinal() {
             let accs = JSON.parse(localStorage.getItem('cl_v5_accs')) || {};
-            if(window.authMode === 'reg') {
-                if(accs[u]) return alert("Tài khoản đã tồn tại!");
-                accs[u] = { pass: p, balance: 0, today: 0, earned: 0, counts: {} };
-                localStorage.setItem('cl_v5_accs', JSON.stringify(accs));
-                alert("Đăng ký OK! Hãy đăng nhập."); switchAuth('login');
-            } else {
-                if(accs[u] && accs[u].pass === p) {
-                    localStorage.setItem('user', u);
-                    checkLogin();
-                } else alert("Sai tài khoản hoặc mật khẩu!");
+            let uData = accs[currentUser];
+            const config = TASKS.find(t => t.id === window.pendingTask);
+            
+            if (config && uData) {
+                uData.counts = uData.counts || {};
+                const done = uData.counts[window.pendingTask] || 0;
+                if(done < config.limit) {
+                    uData.balance += config.reward;
+                    uData.earned += config.reward;
+                    uData.today += 1;
+                    uData.counts[window.pendingTask] = done + 1;
+                    accs[currentUser] = uData;
+                    localStorage.setItem('cl_v5_accs', JSON.stringify(accs));
+                    alert("THÀNH CÔNG: Đã cộng " + config.reward + " xu!");
+                }
             }
+            window.location.href = window.location.origin + window.location.pathname;
+        }
+
+        function goTask(id) {
+            const task = TASKS.find(t => t.id === id);
+            // Kiểm tra chạy file hay chạy web
+            if (window.location.protocol === 'file:' || window.location.href.includes('content://')) {
+                return alert("LỖI: Bạn phải đưa code lên GitHub Pages hoặc Hosting mới nhận được xu!");
+            }
+            const myLink = window.location.origin + window.location.pathname;
+            const callback = encodeURIComponent(`${myLink}?task=${id}&status=success`);
+            const connector = task.url.includes('?') ? '&url=' : '?url=';
+            window.location.href = task.url + connector + callback;
         }
 
         function loadData() {
             let accs = JSON.parse(localStorage.getItem('cl_v5_accs')) || {};
             data = accs[currentUser];
-            if(!data) return logout();
+            if(!data) { localStorage.removeItem('user'); location.reload(); return; }
             checkDailyReset();
             updateUI();
             renderTasks();
-        }
-
-        function handleRedirectCallback() {
-            const params = new URLSearchParams(window.location.search);
-            if (params.get('status') === 'success' && params.get('task') && currentUser) {
-                document.getElementById('verify-modal').style.display = 'flex';
-                setTimeout(() => {
-                    document.getElementById('verify-loading').classList.add('hidden');
-                    document.getElementById('verify-success').classList.remove('hidden');
-                    window.pendingTask = params.get('task');
-                }, 2000);
-            }
-        }
-
-        function claimReward() {
-            const taskId = window.pendingTask;
-            let accs = JSON.parse(localStorage.getItem('cl_v5_accs')) || {};
-            let uData = accs[currentUser];
-            const config = TASKS.find(t => t.id === taskId);
-            if (config && uData) {
-                uData.counts = uData.counts || {};
-                const done = uData.counts[taskId] || 0;
-                if (done < config.limit) {
-                    uData.balance += config.reward;
-                    uData.earned += config.reward;
-                    uData.today += 1;
-                    uData.counts[taskId] = done + 1;
-                    accs[currentUser] = uData;
-                    localStorage.setItem('cl_v5_accs', JSON.stringify(accs));
-                    alert(`CỘNG ${config.reward} XU THÀNH CÔNG!`);
-                    window.location.href = window.location.origin + window.location.pathname;
-                }
-            }
-        }
-
-        function handleWd() {
-            const bank = document.getElementById('wd-bank').value.trim();
-            const stk = document.getElementById('wd-stk').value.trim();
-            const name = document.getElementById('wd-name').value.trim();
-            const amount = parseInt(document.getElementById('wd-amount').value);
-
-            if(!bank || !stk || !name || isNaN(amount)) return alert("Vui lòng nhập đủ thông tin ngân hàng!");
-            if(amount < 100000) return alert("Rút tối thiểu 100,000 Xu!");
-            if(amount > data.balance) return alert("Số dư không đủ!");
-
-            data.balance -= amount;
-            save(); updateUI();
-            alert(`LỆNH RÚT TIỀN ĐÃ GỬI!\nNgân hàng: ${bank}\nSTK: ${stk}\nTên: ${name}\nSố tiền: ${amount.toLocaleString()} Xu.`);
         }
 
         function updateUI() {
@@ -287,29 +257,49 @@
         function renderTasks() {
             const container = document.getElementById('task-list');
             container.innerHTML = TASKS.map(t => {
-                const done = data.counts[t.id] || 0;
+                const done = (data.counts && data.counts[t.id]) ? data.counts[t.id] : 0;
                 const isMax = done >= t.limit;
                 return `
-                <div class="bg-white p-6 rounded-[35px] shadow-sm border border-gray-100 flex justify-between items-center ${isMax ? 'opacity-40 grayscale' : ''}">
+                <div class="bg-white p-6 rounded-[35px] shadow-sm flex justify-between items-center ${isMax ? 'opacity-40' : ''}">
                     <div>
-                        <h4 class="font-black text-[13px] uppercase text-gray-900 italic tracking-tighter">${t.name}</h4>
+                        <h4 class="font-black text-[13px] uppercase italic tracking-tighter text-gray-900">${t.name}</h4>
                         <p class="text-[9px] font-black text-gray-400 mt-1 uppercase">Thưởng: <span class="text-green-500">+${t.reward}</span> • Lượt: ${t.limit - done}/${t.limit}</p>
                     </div>
-                    <button onclick="${isMax ? '' : `goTask('${t.id}')`}" class="btn-active ${isMax ? 'bg-gray-100 text-gray-400' : 'bg-blue-700 text-white shadow-xl shadow-blue-100'} px-6 py-4 rounded-2xl text-[10px] font-black uppercase">
+                    <button onclick="${isMax ? '' : `goTask('${t.id}')`}" class="btn-active ${isMax ? 'bg-gray-100 text-gray-400' : 'bg-blue-700 text-white shadow-lg'} px-6 py-4 rounded-2xl text-[10px] font-black uppercase">
                         ${isMax ? 'Hết lượt' : 'Vượt link'}
                     </button>
                 </div>`;
             }).join('');
         }
 
-        function goTask(id) {
-            const task = TASKS.find(t => t.id === id);
-            if(confirm(`XÁC NHẬN:\nSau khi vượt link xong hãy đợi hệ thống tự chuyển hướng về để nhận thưởng.`)) {
-                window.location.href = task.url;
+        function handleAuth() {
+            const u = document.getElementById('au-user').value.trim().toLowerCase();
+            const p = document.getElementById('au-pass').value.trim();
+            if(!u || !p) return alert("Vui lòng nhập đủ thông tin!");
+            let accs = JSON.parse(localStorage.getItem('cl_v5_accs')) || {};
+            if(window.authMode === 'reg') {
+                if(accs[u]) return alert("Tài khoản đã tồn tại!");
+                accs[u] = { pass: p, balance: 0, today: 0, earned: 0, counts: {} };
+                localStorage.setItem('cl_v5_accs', JSON.stringify(accs));
+                alert("Đăng ký thành công! Hãy đăng nhập."); switchAuth('login');
+            } else {
+                if(accs[u] && accs[u].pass === p) {
+                    localStorage.setItem('user', u);
+                    location.reload();
+                } else alert("Thông tin đăng nhập không chính xác!");
             }
         }
 
-        function save() {
+        function handleWd() {
+            const amount = parseInt(document.getElementById('wd-amount').value);
+            if(isNaN(amount) || amount < 100000) return alert("Số xu rút tối thiểu là 100,000!");
+            if(amount > data.balance) return alert("Số dư tài khoản không đủ!");
+            data.balance -= amount;
+            saveData(); updateUI();
+            alert("Đã gửi yêu cầu rút tiền thành công!");
+        }
+
+        function saveData() {
             let accs = JSON.parse(localStorage.getItem('cl_v5_accs')) || {};
             accs[currentUser] = data;
             localStorage.setItem('cl_v5_accs', JSON.stringify(accs));
@@ -317,32 +307,39 @@
 
         function switchAuth(m) {
             window.authMode = m;
-            document.getElementById('btn-login').className = m === 'login' ? "w-1/2 py-3.5 rounded-xl font-black text-[11px] uppercase bg-white shadow-md text-blue-700" : "w-1/2 py-3.5 rounded-xl font-black text-[11px] uppercase text-gray-400";
-            document.getElementById('btn-reg').className = m === 'reg' ? "w-1/2 py-3.5 rounded-xl font-black text-[11px] uppercase bg-white shadow-md text-blue-700" : "w-1/2 py-3.5 rounded-xl font-black text-[11px] uppercase text-gray-400";
-        }
+            document.getElementById('btn-login').className = m === 'login' ? "w-1/2 py-4 rounded-xl font-black text-[11px] uppercase bg-white shadow-md text-blue-700" : "w-1/2 py-4 rounded-xl font-black text-[11px] uppercase text-gray-400";
+            document.getElementById('btn-reg').className = m === 'reg' ? "w-1/2 py-4 rounded-xl font-black text-[11px] uppercase bg-white shadow-md text-blue-700" : "w-1/2 py-4 rounde-xl font-black text-[11px] uppercase text-gray-400";
+}
 
         function switchTab(name, el) {
             document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('tab-active'));
             document.getElementById('tab-' + name).classList.add('tab-active');
-            document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active', 'text-blue-700'));
-            el.classList.add('active', 'text-blue-700');
+            document.querySelectorAll('.nav-item').forEach(n => { n.classList.remove('text-blue-700', 'active'); n.classList.add('text-gray-400'); });
+            el.classList.add('text-blue-700', 'active'); el.classList.remove('text-gray-400');
+        }
+
+        function startTimer() {
+            setInterval(() => {
+                const now = new Date();
+                const next = new Date(now.getFullYear(), now.getMonth(), now.getDate() + 1, 0, 0, 0);
+                const d = next - now;
+                const h = Math.floor(d/3600000).toString().padStart(2,'0');
+                const m = Math.floor((d%3600000)/60000).toString().padStart(2,'0');
+                const s = Math.floor((d%60000)/1000).toString().padStart(2,'0');
+                if(document.getElementById('reset-timer')) document.getElementById('reset-timer').innerText = `${h}:${m}:${s}`;
+            }, 1000);
         }
 
         function checkDailyReset() {
             const today = new Date().toLocaleDateString('vi-VN');
-            const last = localStorage.getItem('last_reset_' + currentUser);
-            if(last !== today) {
-                data.counts = {};
-                data.today = 0;
+            if(localStorage.getItem('last_reset_' + currentUser) !== today) {
+                data.counts = {}; data.today = 0;
                 localStorage.setItem('last_reset_' + currentUser, today);
-                save();
+                saveData();
             }
         }
 
-        function logout() {
-            localStorage.removeItem('user');
-            location.reload();
-        }
+        function logout() { localStorage.removeItem('user'); location.reload(); }
     </script>
 </body>
 </html>
